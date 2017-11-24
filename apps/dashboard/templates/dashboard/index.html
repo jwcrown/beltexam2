@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}" />
+    <title>Travel</title>
+</head>
+<body>    
+    <h3 class="logout"><a href="/main/logout">Logout</a></h3>
+    <h1>Hello, {{ request.session.name }}!</h1>
+
+    
+    <h2>Your Trip Schedules</h2>
+    <table>
+        <tr>
+            <th>Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Plan</th>
+        </tr>
+        {% for n in mytrips %}
+        <tr>
+            <td><a href="/travels/destination/{{ n.id }}">{{ n.destination }}</a></td>
+            <td>{{ n.start_date}}</td>
+            <td>{{ n.end_date}}</td>
+            <td>{{ n.plan}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Other User's Travel Plans</h2>
+    <table>
+        
+        <tr>
+            <th>Name</th>
+            <th>Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Do You Want to Join?</th>
+        </tr>
+        {% for n in othertrips %}
+        <tr>
+            <td>{{ n.uploader.name }}</td>
+            <td><a href="/travels/destination/{{ n.id }}">{{ n.destination }}</a></td>
+            <td>{{ n.start_date }}</td>
+            <td>{{ n.end_date }}</td>
+            <td><a href="/travels/join/{{ n.id }}">Join</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3 class="add"><a href="/travels/add">Add Travel Plan</a></h3> 
+</body>
+</html>
